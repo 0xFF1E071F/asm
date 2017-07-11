@@ -1,0 +1,22 @@
+#define IDM_OPEN 1
+#define IDM_EXIT 2
+#define IDM_ABOUT 3
+
+MainMenu MENU
+{
+	POPUP "&File"
+	{
+		POPUP "&Edit"
+		{
+			MENUITEM "&Open",IDM_OPEN
+		}
+		MENUITEM SEPARATOR
+		MENUITEM "&Exit",IDM_EXIT
+	}
+	
+	POPUP "&Help"
+	{
+		MENUITEM SEPARATOR
+		MENUITEM "&About",IDM_ABOUT
+	}
+}

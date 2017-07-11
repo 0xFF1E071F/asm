@@ -1,0 +1,53 @@
+object Macro f,p:VARARG
+    LOCAL obj
+    LOCAL poz
+    LOCAL txt, arg
+    txt TEXTEQU <>
+    FOR arg, <p>
+        txt CATSTR <arg>, <!,>, txt
+    ENDM
+    txt SUBSTR  txt, 1, @SizeStr( %txt ) - 1
+    txt CATSTR  <!<>, txt, <!>>
+	
+    % poz INSTR 1,<f>,<.>
+    obj SUBSTR <f>, 1, poz-1
+
+    % FOR arg, txt
+        push arg
+    ENDM
+
+    push offset obj
+    call f
+endm
+
+ROLL_LIST struct
+	rl_data		dd ?
+	lb_handle	      dd ?
+	rl_list		dd ?
+	rl_font		dd ?
+;methods
+	add_to		dd ?
+	delete		dd ?
+	clear		      dd ?
+	release		dd ?
+;events
+      on_click          dd ?
+ROLL_LIST ends
+
+.data?
+test0 ROLLLIST <>
+
+.code
+
+....
+m2m test0.rl_font,my_font
+m2m test0.lb_handle,list_h
+mov test0.on_click, offset rl_clicked
+invoke new_object,addr test0, TYPE_ROLLLIST;заполнение методов в зависимомти от типа
+...
+object test0.add_to,offset text_str,5
+...
+rl_add_to proc obj:DWORD,s:DWORD,i:DWORD
+...
+ret
+rl_add_to endp

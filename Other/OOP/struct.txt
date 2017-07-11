@@ -1,0 +1,37 @@
+RECT STRUCT
+      left    DWORD  ?
+      top     DWORD  ?
+      right   DWORD  ?
+      bottom  DWORD  ?
+RECT ENDS
+
+mov eax, lpRct
+
+    mov [eax],    DWORD PTR 10
+    mov [eax+4],  DWORD PTR 12
+    mov [eax+8],  DWORD PTR 14
+    mov [eax+12], DWORD PTR 16
+
+This works fine but with more complex structures this becomes much harder to work with and far more error prone.
+
+The alternative is to use a method that MASM has to address the individual members by using the ASSUME directive.
+
+    ASSUME eax:PTR RECT
+    mov eax, lpRct
+    mov [eax].left,   10
+    mov [eax].top,    12
+    mov [eax].right,  14
+    mov [eax].bottom, 16
+    ASSUME eax:nothing
+
+This works by telling the assembler that the EAX register is to be treated like a RECT structure. The ASSUME eax:nothing tells the assembler that the register is no longer being used in this manner.
+
+There is an alternative notation where you can individually "type cast" each member.
+
+    mov eax, lpRct
+
+    mov (RECT PTR [eax]).left,   10
+    mov (RECT PTR [eax]).top,    12
+    mov (RECT PTR [eax]).right,  14
+    mov (RECT PTR [eax]).bottom, 16
+

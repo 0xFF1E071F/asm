@@ -1,0 +1,24 @@
+[Version]
+Version=3000
+[Project]
+Assembler=masm
+Group=2,-1,0,1,wave5,-2,-1,1,Assembly,-5,-1,1,Resource
+F1=-2,2,1,-6,-25,1089,785,101,wave5.asm
+F2=
+F3=-5,2,4,66,66,600,400,0,wave5.rc
+Path=C:\Documents and Settings\Администратор\Рабочий стол\asm\Ассемблер\Аудиокарта\wave5
+Open=0,3
+Api=
+C1=0
+B1=
+M1=
+C3=
+B3=
+M3=
+[Make]
+Make=0
+0=Window Release,'/v "$R"',"$R.res",'/c /coff /Cp "$C"',"$C.obj",'/SUBSYSTEM:WINDOWS /RELEASE /VERSION:4.0 /OUT:$O $C $M $R',"$C.exe",'',
+1=Window Debug,'/v "$R"',"$R.res",'/c /coff /Cp /Zi /Zd "$C"',"$C.obj",'/SUBSYSTEM:WINDOWS /DEBUG /VERSION:4.0 /OUT:$O $C $M $R',"$C.exe",'',
+Delete=0
+IncBuild=0
+Run=0,'',''
