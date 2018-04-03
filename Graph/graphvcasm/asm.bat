@@ -1,1 +1,0 @@
-c:\masm32\bin\ml.exe /c /coff draw.asm

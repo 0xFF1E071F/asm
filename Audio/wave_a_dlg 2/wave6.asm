@@ -122,26 +122,31 @@ FillBufferRandom endp
 FillBufferSinus proc pBuffer:DWORD, bufSize:DWORD
 	LOCAL res : DWORD 		
 	finit		
+	fld _2pi 										
 	fld1										
 	fild dword ptr bufSize							; получили dt			
-	fdiv
-	fld _2pi 										
-	fmul freq    							; получили w=2*Pi*freq
-	fmul										; получить w*dt		
+	fdiv	
+	fmul freq    							; получили freq*dt
+	fmul st, st(1)						; получили w*dt		
 	mov ebx, pBuffer 				; подготовка цикла
 	xor esi, esi
 	fld startt											
 	fld st	
-loop_sin:	
+loop_sin:		
 	fsin
 	fmul ampl	
 	fistp dword ptr res
 	mov eax, res
-	mov byte ptr [ebx+esi], al				; выгрузка в массив
-	fadd st, st(1)	
-	fld st	
-	inc esi										; переход на следующий шаг
-	cmp esi, bufSize
+	mov ah, al
+	mov word ptr [ebx+esi], ax		; выгрузка в массив		
+	fadd st, st(1)							; прибавляем wdt
+	fcomi st, st(2)							; проверяем, что не стало больше 2pi
+	jg less_2pi
+	fsub st, st(2)  							; отнимаем 2pi
+less_2pi:	
+	fld st		
+	add esi, 2								; переход на следующий шаг
+	cmp esi, bufSize						
 	jl loop_sin	
 	fstp startt								; сохранение времени, до которого расчитали	
 	ret
