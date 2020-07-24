@@ -15,6 +15,7 @@ includelib	c:\masm32\lib\shell32.lib
 includelib	c:\masm32\lib\masm32.lib
 
 DlgProc PROTO :HWND,:UINT,:WPARAM,:LPARAM
+ShowMsg proto :dword
 
 .const
 IDD_MAIN equ 1000
